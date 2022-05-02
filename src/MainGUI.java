@@ -20,6 +20,9 @@ public class MainGUI extends JFrame implements ActionListener {
     private JPanel mapScreen;
     private JPanel combatScreen;
 
+    final GridBagConstraints gbc = new GridBagConstraints();
+    private Insets insets;
+
     public static void main(String[] args) {
         new MainGUI();
     }
@@ -35,24 +38,36 @@ public class MainGUI extends JFrame implements ActionListener {
 
     private void setStartMenuPanel() {
         startMenu = new JPanel();
+        startMenu.setLayout(new GridBagLayout());
 
         titleText = new JLabel();
         titleText.setText("Dungeon Adventure");
-        startMenu.add(titleText);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        startMenu.add(titleText, gbc);
 
         startMenuButtonGroup = new ButtonGroup();
-        startButton = new JButton();
-        settingsButton = new JButton();
-        exitButton = new JButton();
 
         startMenuButtonGroup.add(startButton);
         startMenuButtonGroup.add(settingsButton);
         startMenuButtonGroup.add(exitButton);
 
-        startMenu.add(startButton, BoxLayout.Y_AXIS);
-        startMenu.add(settingsButton, BoxLayout.Y_AXIS);
-        startMenu.add(exitButton, BoxLayout.Y_AXIS);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        insets = new Insets(300,0,0,0);
+        gbc.insets = insets;
+        startMenu.add(startButton, gbc);
+        insets = new Insets(0,0,0,0);
+        gbc.insets = insets;
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        startMenu.add(settingsButton, gbc);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        startMenu.add(exitButton, gbc);
 
+        repaint();
         this.add(startMenu);
         startMenu.setVisible(true);
     }
