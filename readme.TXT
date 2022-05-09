@@ -1,3 +1,3 @@
 Cage Peterson
-Mitiku Badeg
+Mitiku Badeg,mkinfe@uw.edu
 Kora Obsie
