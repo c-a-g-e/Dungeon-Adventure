@@ -1,8 +1,11 @@
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 public class MainGUI extends JFrame implements ActionListener {
 
@@ -21,9 +24,10 @@ public class MainGUI extends JFrame implements ActionListener {
     private final JRadioButton myThiefButton = new JRadioButton("Thief");
     private final JButton mySelectButton = new JButton("Select Character");
     private final JButton myBackButton = new JButton("Back");
-    private BufferedImage myWarriorImage;
-    private BufferedImage mySorceressImage;
-    private BufferedImage myThiefImage;
+    private final JLabel myImageLabel = new JLabel();
+    ImageIcon myWarriorImageIcon = null;
+    ImageIcon mySorceressImageIcon = null;
+    ImageIcon myThiefImageIcon = null;
     private JTextArea myHeroDescription = new JTextArea("");
     private final String myWarriorDescription = """
                       |    Warrior    |
@@ -86,8 +90,39 @@ public class MainGUI extends JFrame implements ActionListener {
         this.setTitle("Dungeon Adventure");
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(800, 800);
+        initImages();
         initStartMenuPanel();
         this.setVisible(true);
+    }
+
+    private void initImages() {
+        BufferedImage myBufferedWarriorImage = null;
+        BufferedImage myBufferedSorceressImage = null;
+        BufferedImage myBufferedThiefImage = null;
+        try {
+            myBufferedWarriorImage = ImageIO.read(new File("res/myWarriorImage.jpg"));
+            myBufferedSorceressImage = ImageIO.read(new File("res/mySorceressImage.jpg"));
+            myBufferedThiefImage = ImageIO.read(new File("res/myThiefImage.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        int width = 200;
+        int height = 350;
+
+        assert myBufferedWarriorImage != null;
+//        Image myWarriorImage = myBufferedWarriorImage.getScaledInstance(myWarriorImageLabel.getWidth(), myWarriorImageLabel.getHeight(),
+//                Image.SCALE_SMOOTH);
+        Image myWarriorImage = myBufferedWarriorImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        assert myBufferedSorceressImage != null;
+        Image mySorceressImage = myBufferedSorceressImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+        assert myBufferedThiefImage != null;
+        Image myThiefImage = myBufferedThiefImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
+
+        myWarriorImageIcon = new ImageIcon(myWarriorImage);
+        mySorceressImageIcon = new ImageIcon(mySorceressImage);
+        myThiefImageIcon = new ImageIcon(myThiefImage);
+
     }
 
     private void initStartMenuPanel() {
@@ -128,7 +163,8 @@ public class MainGUI extends JFrame implements ActionListener {
     }
 
     private void initCharSelectPanel() {
-        myCharSelectMenu = new JPanel();
+        myCharSelectMenu = new JPanel(new BorderLayout());
+        JPanel myCharSelectHeroButtons = new JPanel(new GridLayout(3, 1));
         ButtonGroup myHeroButtonGroup = new ButtonGroup();
 
         myCharSelectTitle.setEditable(false);
@@ -138,14 +174,18 @@ public class MainGUI extends JFrame implements ActionListener {
         myHeroButtonGroup.add(mySorceressButton);
         myHeroButtonGroup.add(myThiefButton);
 
-        myCharSelectMenu.add(myWarriorButton, BorderLayout.WEST);
-        myCharSelectMenu.add(mySorceressButton, BorderLayout.WEST);
-        myCharSelectMenu.add(myThiefButton, BorderLayout.WEST);
+        myCharSelectHeroButtons.add(myWarriorButton);
+        myCharSelectHeroButtons.add(mySorceressButton);
+        myCharSelectHeroButtons.add(myThiefButton);
+
+        myCharSelectMenu.add(myCharSelectHeroButtons, BorderLayout.WEST);
 
         myCharSelectMenu.add(myBackButton, BorderLayout.SOUTH);
         myCharSelectMenu.add(mySelectButton, BorderLayout.SOUTH);
 
         myCharSelectMenu.add(myHeroDescription, BorderLayout.EAST);
+
+        myCharSelectMenu.add(myImageLabel, BorderLayout.CENTER);
 
         myWarriorButton.addActionListener(this);
         mySorceressButton.addActionListener(this);
@@ -172,10 +212,13 @@ public class MainGUI extends JFrame implements ActionListener {
         } else if (myCharSelectMenu.isVisible()) {
             if (myWarriorButton.equals(source)) {
                 myHeroDescription.setText(myWarriorDescription);
+                myImageLabel.setIcon(myWarriorImageIcon);
             } else if (mySorceressButton.equals(source)) {
                 myHeroDescription.setText(mySorceressDescription);
+                myImageLabel.setIcon(mySorceressImageIcon);
             } else if (myThiefButton.equals(source)) {
                 myHeroDescription.setText(myThiefDescription);
+                myImageLabel.setIcon(myThiefImageIcon);
             } else if (mySelectButton.equals(source)) {
                 //set the character to whatever radio button is selected and start the game
             } else if (myBackButton.equals(source)) {
