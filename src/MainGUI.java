@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class MainGUI extends JFrame implements ActionListener {
 
-    private JFrame myMainGui;
+    private final JFrame myMainGui;
 
     private JPanel myStartMenu;
     private final JLabel myTitleText = new JLabel("Dungeon Adventure");
@@ -28,7 +28,7 @@ public class MainGUI extends JFrame implements ActionListener {
     ImageIcon myWarriorImageIcon = null;
     ImageIcon mySorceressImageIcon = null;
     ImageIcon myThiefImageIcon = null;
-    private JTextArea myHeroDescription = new JTextArea("");
+    private final JTextArea myHeroDescription = new JTextArea("");
     private final String myWarriorDescription = """
                       |    Warrior    |
         Health Points |      125      |
@@ -111,8 +111,6 @@ public class MainGUI extends JFrame implements ActionListener {
         int height = 350;
 
         assert myBufferedWarriorImage != null;
-//        Image myWarriorImage = myBufferedWarriorImage.getScaledInstance(myWarriorImageLabel.getWidth(), myWarriorImageLabel.getHeight(),
-//                Image.SCALE_SMOOTH);
         Image myWarriorImage = myBufferedWarriorImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
         assert myBufferedSorceressImage != null;
         Image mySorceressImage = myBufferedSorceressImage.getScaledInstance(width, height, Image.SCALE_SMOOTH);
