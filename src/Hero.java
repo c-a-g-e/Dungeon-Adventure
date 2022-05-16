@@ -10,7 +10,7 @@
  */
 public class Hero extends DungeonCharacter{
 
-    /** The chance that the hero will block the next incoming attack from the monster. */
+    /** The chance that the hero will block the next incoming attack from the monsters. */
     private int myBlockChance;
     /** The chance that the hero's special skill will succeed. */
     protected int mySpecialSkillChance;
