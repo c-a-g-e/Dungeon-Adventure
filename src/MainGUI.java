@@ -75,8 +75,11 @@ public class MainGUI extends JFrame implements ActionListener {
                       |turn.          |
         """;
 
-    private JPanel myMapScreen;
-    private JPanel myCombatScreen;
+    private JPanel myGamePanel;
+    private JPanel myMapPanel;
+    private JPanel myControlsPanel;
+    private JPanel myCharacterPanel;
+    private JPanel myCombatPanel;
 
     final GridBagConstraints gbc = new GridBagConstraints();
     private Insets insets;
@@ -199,7 +202,55 @@ public class MainGUI extends JFrame implements ActionListener {
         this.add(myCharSelectMenu);
         myCharSelectMenu.setVisible(true);
     }
-    //commen
+
+    private void initGamePanel() {
+        myGamePanel = new JPanel(new GridBagLayout());
+        myMapPanel = new JPanel();
+        myCharacterPanel = new JPanel();
+        myControlsPanel = new JPanel();
+        myCombatPanel = new JPanel();
+
+        gbc.fill = GridBagConstraints.BOTH;
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridheight = 4;
+        gbc.gridwidth = 4;
+        gbc.weightx = 1;
+        gbc.weighty = 1;
+        myMapPanel.setBackground(Color.BLACK);
+        myGamePanel.add(myMapPanel, gbc);
+
+        gbc.gridx = 4;
+        gbc.gridy = 0;
+        gbc.gridheight = 4;
+        gbc.gridwidth = 2;
+//        gbc.weightx = 0.33;
+//        gbc.weighty = 0.66;
+        myCharacterPanel.setBackground(Color.BLUE);
+        myGamePanel.add(myCharacterPanel, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 4;
+        gbc.gridheight = 2;
+        gbc.gridwidth = 3;
+//        gbc.weightx = 1;
+//        gbc.weighty = 0.33;
+        myControlsPanel.setBackground(Color.GREEN);
+        myGamePanel.add(myControlsPanel, gbc);
+
+        gbc.gridx = 3;
+        gbc.gridy = 4;
+        gbc.gridheight = 2;
+        gbc.gridwidth = 3;
+//        gbc.weightx = 1;
+//        gbc.weighty = 0.33;
+        myCombatPanel.setBackground(Color.red);
+        myGamePanel.add(myCombatPanel, gbc);
+
+        this.add(myGamePanel);
+        myGamePanel.setVisible(true);
+
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
@@ -227,6 +278,8 @@ public class MainGUI extends JFrame implements ActionListener {
                 myImageLabel.setIcon(myThiefImageIcon);
             } else if (mySelectButton.equals(source)) {
                 //set the character to whatever radio button is selected and start the game
+                initGamePanel();
+                myCharSelectMenu.setVisible(false);
             } else if (myBackButton.equals(source)) {
                 myCharSelectMenu.setVisible(false);
                 myStartMenu.setVisible(true);
