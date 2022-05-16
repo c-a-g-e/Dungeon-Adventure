@@ -199,7 +199,7 @@ public class MainGUI extends JFrame implements ActionListener {
         this.add(myCharSelectMenu);
         myCharSelectMenu.setVisible(true);
     }
-    //comment
+    //commen
 
     @Override
     public void actionPerformed(ActionEvent e) {
