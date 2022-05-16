@@ -32,7 +32,7 @@ public class MainGUI extends JFrame implements ActionListener {
     private final String myWarriorDescription = """
                       |    Warrior    |
         Health Points |      125      |
-        Attack Speed  |       4       |
+        Attack Speed  |      4        |
         Hit Chance    |      80%      |
         Minimum Damage|      35       |
         Maximum Damage|      60       |
@@ -46,7 +46,7 @@ public class MainGUI extends JFrame implements ActionListener {
     private final String mySorceressDescription = """
                       |   Sorceress   |
         Health Points |      75       |
-        Attack Speed  |       5       |
+        Attack Speed  |      5        |
         Hit Chance    |      70%      |
         Minimum Damage|      25       |
         Maximum Damage|      45       |
@@ -59,7 +59,7 @@ public class MainGUI extends JFrame implements ActionListener {
     private final String myThiefDescription = """
                       |     Thief     |
         Health Points |      75       |
-        Attack Speed  |       6       |
+        Attack Speed  |      6        |
         Hit Chance    |      80%      |
         Minimum Damage|      40       |
         Maximum Damage|      45       |
@@ -162,6 +162,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
     private void initCharSelectPanel() {
         myCharSelectMenu = new JPanel(new BorderLayout());
+
         JPanel myCharSelectHeroButtons = new JPanel(new GridLayout(3, 1));
         ButtonGroup myHeroButtonGroup = new ButtonGroup();
 
@@ -178,16 +179,22 @@ public class MainGUI extends JFrame implements ActionListener {
 
         myCharSelectMenu.add(myCharSelectHeroButtons, BorderLayout.WEST);
 
-        myCharSelectMenu.add(myBackButton, BorderLayout.SOUTH);
-        myCharSelectMenu.add(mySelectButton, BorderLayout.SOUTH);
+        JPanel myButtonPanel = new JPanel();
+        myButtonPanel.add(myBackButton);
+        myButtonPanel.add(mySelectButton);
+        myCharSelectMenu.add(myButtonPanel, BorderLayout.SOUTH);
 
+        myHeroDescription.setPreferredSize(new Dimension(200,800));
         myCharSelectMenu.add(myHeroDescription, BorderLayout.EAST);
 
+        myImageLabel.setVerticalAlignment(SwingConstants.CENTER);
         myCharSelectMenu.add(myImageLabel, BorderLayout.CENTER);
 
         myWarriorButton.addActionListener(this);
         mySorceressButton.addActionListener(this);
         myThiefButton.addActionListener(this);
+        myBackButton.addActionListener(this);
+        mySelectButton.addActionListener(this);
 
         this.add(myCharSelectMenu);
         myCharSelectMenu.setVisible(true);
