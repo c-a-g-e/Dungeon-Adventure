@@ -10,7 +10,6 @@ import java.util.Scanner;
 import java.io.File;
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.AudioSystem;
-
 /**
  * The parent object of the Hero and Monster classes. This class contains all of the general
  * methods, fields and actions that both the Hero and Monster classes will use.
