@@ -1,5 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.plaf.basic.BasicArrowButton;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -205,51 +206,70 @@ public class MainGUI extends JFrame implements ActionListener {
 
     private void initGamePanel() {
         myGamePanel = new JPanel(new GridBagLayout());
-        myMapPanel = new JPanel();
-        myCharacterPanel = new JPanel();
-        myControlsPanel = new JPanel();
-        myCombatPanel = new JPanel();
 
+        gbc.weightx = 1;
+        gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
+
+        this.add(myGamePanel);
+        myGamePanel.setVisible(true);
+
+    }
+
+    private void initMapComponent() {
+        myMapPanel = new JPanel();
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         gbc.gridheight = 4;
         gbc.gridwidth = 4;
-        gbc.weightx = 1;
-        gbc.weighty = 1;
+        gbc.ipadx = 20;
+        gbc.ipady = 20;
         myMapPanel.setBackground(Color.BLACK);
         myGamePanel.add(myMapPanel, gbc);
+    }
+
+    private void initCharacterComponent() {
+        myCharacterPanel = new JPanel(new GridBagLayout());
+        JLabel heroPicture = new JLabel();
+        JTextArea heroStats = new JTextArea();
+        JTextArea heroInventory = new JTextArea();
 
         gbc.gridx = 4;
         gbc.gridy = 0;
-        gbc.gridheight = 4;
         gbc.gridwidth = 2;
-//        gbc.weightx = 0.33;
-//        gbc.weighty = 0.66;
+        gbc.ipadx = 0;
         myCharacterPanel.setBackground(Color.BLUE);
         myGamePanel.add(myCharacterPanel, gbc);
+    }
+
+    private void initControlsComponent() {
+        myControlsPanel = new JPanel();
+
+        JButton upButton = new BasicArrowButton(SwingConstants.NORTH);
+        JButton leftButton = new BasicArrowButton(SwingConstants.WEST);
+        JButton rightButton = new BasicArrowButton(SwingConstants.EAST);
+        JButton downButton = new BasicArrowButton(SwingConstants.SOUTH);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
         gbc.gridheight = 2;
         gbc.gridwidth = 3;
-//        gbc.weightx = 1;
-//        gbc.weighty = 0.33;
+        gbc.ipadx = 0;
         myControlsPanel.setBackground(Color.GREEN);
         myGamePanel.add(myControlsPanel, gbc);
+    }
+
+    private void initCombatComponent() {
+        myCombatPanel = new JPanel();
 
         gbc.gridx = 3;
         gbc.gridy = 4;
         gbc.gridheight = 2;
         gbc.gridwidth = 3;
-//        gbc.weightx = 1;
-//        gbc.weighty = 0.33;
+        gbc.ipadx = 20;
         myCombatPanel.setBackground(Color.red);
         myGamePanel.add(myCombatPanel, gbc);
-
-        this.add(myGamePanel);
-        myGamePanel.setVisible(true);
-
     }
 
     @Override
