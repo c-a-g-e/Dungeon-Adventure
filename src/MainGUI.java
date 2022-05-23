@@ -7,10 +7,12 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.util.Enumeration;
 
 public class MainGUI extends JFrame implements ActionListener {
 
     private final JFrame myMainGui;
+    private Hero mySelectedHero;
 
     private JPanel myStartMenu;
     private final JLabel myTitleText = new JLabel("Dungeon Adventure");
@@ -23,12 +25,14 @@ public class MainGUI extends JFrame implements ActionListener {
     private final JRadioButton myWarriorButton = new JRadioButton("Warrior");
     private final JRadioButton mySorceressButton = new JRadioButton("Sorceress");
     private final JRadioButton myThiefButton = new JRadioButton("Thief");
+    ButtonGroup myHeroButtonGroup = null;
     private final JButton mySelectButton = new JButton("Select Character");
     private final JButton myBackButton = new JButton("Back");
     private final JLabel myImageLabel = new JLabel();
     ImageIcon myWarriorImageIcon = null;
     ImageIcon mySorceressImageIcon = null;
     ImageIcon myThiefImageIcon = null;
+    ImageIcon mySelectedHeroIcon = null;
     private final JTextArea myHeroDescription = new JTextArea("");
     private final String myWarriorDescription = """
                       |    Warrior    |
@@ -168,7 +172,7 @@ public class MainGUI extends JFrame implements ActionListener {
         myCharSelectMenu = new JPanel(new BorderLayout());
 
         JPanel myCharSelectHeroButtons = new JPanel(new GridLayout(3, 1));
-        ButtonGroup myHeroButtonGroup = new ButtonGroup();
+        myHeroButtonGroup = new ButtonGroup();
 
         myCharSelectTitle.setEditable(false);
         myCharSelectMenu.add(myCharSelectTitle, BorderLayout.NORTH);
@@ -180,6 +184,10 @@ public class MainGUI extends JFrame implements ActionListener {
         myCharSelectHeroButtons.add(myWarriorButton);
         myCharSelectHeroButtons.add(mySorceressButton);
         myCharSelectHeroButtons.add(myThiefButton);
+
+        myWarriorButton.setActionCommand("warrior");
+        mySorceressButton.setActionCommand("sorceress");
+        myThiefButton.setActionCommand("thief");
 
         myCharSelectMenu.add(myCharSelectHeroButtons, BorderLayout.WEST);
 
@@ -204,12 +212,18 @@ public class MainGUI extends JFrame implements ActionListener {
         myCharSelectMenu.setVisible(true);
     }
 
+    // TODO - Fix the gridbaglayout of this panel. Figure out how to sustain the component sizes when resizing window.
     private void initGamePanel() {
         myGamePanel = new JPanel(new GridBagLayout());
 
         gbc.weightx = 1;
         gbc.weighty = 1;
         gbc.fill = GridBagConstraints.BOTH;
+
+        initMapComponent();
+        initCharacterComponent();
+        initControlsComponent();
+        initCombatComponent();
 
         this.add(myGamePanel);
         myGamePanel.setVisible(true);
@@ -234,6 +248,26 @@ public class MainGUI extends JFrame implements ActionListener {
         JLabel heroPicture = new JLabel();
         JTextArea heroStats = new JTextArea();
         JTextArea heroInventory = new JTextArea();
+
+        heroPicture.setIcon(mySelectedHeroIcon);
+
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        myCharacterPanel.add(heroPicture, gbc);
+
+        gbc.gridx = 1;
+        gbc.gridy = 0;
+        gbc.gridwidth = 1;
+        gbc.gridheight = 1;
+        myCharacterPanel.add(heroStats, gbc);
+
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        gbc.gridwidth = 2;
+        gbc.gridheight = 1;
+        myCharacterPanel.add(heroInventory, gbc);
 
         gbc.gridx = 4;
         gbc.gridy = 0;
@@ -272,6 +306,7 @@ public class MainGUI extends JFrame implements ActionListener {
         myGamePanel.add(myCombatPanel, gbc);
     }
 
+    // TODO: 5/22/2022 - Fix character selection; if no hero is selected it crashes.
     @Override
     public void actionPerformed(ActionEvent e) {
         Object source = e.getSource();
@@ -290,15 +325,31 @@ public class MainGUI extends JFrame implements ActionListener {
             if (myWarriorButton.equals(source)) {
                 myHeroDescription.setText(myWarriorDescription);
                 myImageLabel.setIcon(myWarriorImageIcon);
+                mySelectedHeroIcon = myWarriorImageIcon;
             } else if (mySorceressButton.equals(source)) {
                 myHeroDescription.setText(mySorceressDescription);
                 myImageLabel.setIcon(mySorceressImageIcon);
+                mySelectedHeroIcon = mySorceressImageIcon;
             } else if (myThiefButton.equals(source)) {
                 myHeroDescription.setText(myThiefDescription);
                 myImageLabel.setIcon(myThiefImageIcon);
+                mySelectedHeroIcon = myThiefImageIcon;
             } else if (mySelectButton.equals(source)) {
-                //set the character to whatever radio button is selected and start the game
+                if (myHeroButtonGroup != null) {
+                    String mySelectedChar = myHeroButtonGroup.getSelection().getActionCommand();
+                    if (mySelectedChar == "warrior") {
+                        System.out.println("warrior selected");
+                    } else if (mySelectedChar == "sorceress") {
+                        System.out.println("sorceress selected");
+                    } else if (mySelectedChar == "thief") {
+                        System.out.println("thief selected");
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Please select a Hero.",
+                                "error", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
                 initGamePanel();
+                //set the character to whatever radio button is selected and start the game
                 myCharSelectMenu.setVisible(false);
             } else if (myBackButton.equals(source)) {
                 myCharSelectMenu.setVisible(false);
