@@ -278,12 +278,17 @@ public class MainGUI extends JFrame implements ActionListener {
     }
 
     private void initControlsComponent() {
-        myControlsPanel = new JPanel();
+        myControlsPanel = new JPanel(new BorderLayout());
 
         JButton upButton = new BasicArrowButton(SwingConstants.NORTH);
         JButton leftButton = new BasicArrowButton(SwingConstants.WEST);
         JButton rightButton = new BasicArrowButton(SwingConstants.EAST);
         JButton downButton = new BasicArrowButton(SwingConstants.SOUTH);
+
+        myControlsPanel.add(upButton, BorderLayout.NORTH);
+        myControlsPanel.add(leftButton, BorderLayout.WEST);
+        myControlsPanel.add(rightButton, BorderLayout.EAST);
+        myControlsPanel.add(downButton, BorderLayout.SOUTH);
 
         gbc.gridx = 0;
         gbc.gridy = 4;
@@ -296,6 +301,7 @@ public class MainGUI extends JFrame implements ActionListener {
 
     private void initCombatComponent() {
         myCombatPanel = new JPanel();
+
 
         gbc.gridx = 3;
         gbc.gridy = 4;
