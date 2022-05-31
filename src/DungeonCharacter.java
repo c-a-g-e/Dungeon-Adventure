@@ -86,7 +86,7 @@ public class DungeonCharacter {
     /** The chance that the DungeonCharacter's attack lands. */
     private double myHitChance;
 
-    /** The amount of attacks that the DungeonCharacter gets per rounnd. */
+    /** The amount of attacks that the DungeonCharacter gets per round. */
     private int myTurns;
 
     /**

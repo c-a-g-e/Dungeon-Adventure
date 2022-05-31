@@ -4,9 +4,14 @@
  * TCSS 142 - Winter 2021
  * Assignment 2
  */
+import org.sqlite.SQLiteDataSource;
+
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Scanner;
 
 /**
@@ -17,6 +22,7 @@ import java.util.Scanner;
  * @version 3/18/2021
  */
 public class DungeonAdventure {
+
 
     /**
      * Runs the game until the uer quits or loses and gives the user the option to replay the game.
