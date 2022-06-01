@@ -10,6 +10,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
@@ -23,6 +24,7 @@ import java.util.Scanner;
  */
 public class DungeonAdventure {
 
+    private static SQLiteDataSource ds = null;
 
     /**
      * Runs the game until the uer quits or loses and gives the user the option to replay the game.
@@ -145,8 +147,10 @@ public class DungeonAdventure {
         int response = DungeonCharacter.getIntInRange(theInput, heroPrompt, 1, 3);
         String name = promptForName(theInput);
         Hero hero;
+        connectToDB();
         if (response == 1) {
             hero = new Warrior(name);
+            //hero = createHero(name, "Warrior");
         } else if (response == 2) {
             hero = new Sorceress(name);
         } else {
@@ -154,6 +158,44 @@ public class DungeonAdventure {
         }
         return hero;
     }
+
+
+    protected static void connectToDB() {
+        //establish connection
+        try {
+            ds = new SQLiteDataSource();
+            ds.setUrl("jdbc:sqlite:DungeonCharacter.db");
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    //TODO FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!
+    protected static Hero createHero(String theName, String theHero) {
+        int[] params = new int[7];
+        try (Connection conn = ds.getConnection();
+             Statement stmt = conn.createStatement();) {
+            ResultSet rs = stmt.executeQuery("SELECT HitPoints, AttackSpeed, MinDamage, MaxDamage, " +
+                    "HitChance, BlockChance, SpecialSkillChance " +
+                    "FROM Heroes " +
+                    "WHERE Class = " +
+                    theHero);
+            params = new int[7];
+            params[0] = rs.getInt("HitPoints");
+            params[1] = rs.getInt("AttackSpeed");
+            params[2] = rs.getInt("MinDamage");
+            params[3] = rs.getInt("MaxDamage");
+            params[4] = rs.getInt("HitChance");
+            params[5] = rs.getInt("BlockChance");
+            params[6] = rs.getInt("SpecialSkillChance");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return new Hero(theName, params[0], params[1], params[2], params[3], params[4], params[5], params[6]);
+    }
+
 
     /**
      * Carries out the commands that the user inputs each turn.
