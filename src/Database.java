@@ -32,7 +32,7 @@ public class Database {
                 "HitChance INT NOT NULL," +
                 "BlockChance INT NOT NULL," +
                 "SpecialSkillChance INT NOT NULL )";
-        try ( Connection conn = ds.getConnection();
+        try  ( Connection conn = ds.getConnection();
               Statement stmt = conn.createStatement(); ) {
             int rv = stmt.executeUpdate( query );
             //stmt.executeUpdate("ALTER TABLE DungeonCharacter DROP PlayerName");

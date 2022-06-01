@@ -153,9 +153,9 @@ public class Monster extends DungeonCharacter {
         } else if (alive()) {
             super.subtractHitPoints(theHitPoints);
         }
-        if (this instanceof Ogre) {
+        if (getName().equals("Ogre")) {
             playSound(ogreHit);
-        } else if (this instanceof Skeleton) {
+        } else if (this instanceof Skeleton ) {
             playSound(skeletonHit);
         } else if (this instanceof Gremlin) {
             playSound(gremlinHit);

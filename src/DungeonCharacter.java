@@ -5,6 +5,8 @@
  * Assignment 2
  */
 
+import org.sqlite.SQLiteDataSource;
+
 import java.util.Random;
 import java.util.Scanner;
 import java.io.File;
@@ -89,6 +91,18 @@ public class DungeonCharacter {
     /** The amount of attacks that the DungeonCharacter gets per round. */
     private int myTurns;
 
+    protected void connectToDB() {
+        SQLiteDataSource ds = null;
+        //establish connection
+        try {
+            ds = new SQLiteDataSource();
+            ds.setUrl("jdbc:sqlite:DungeonCharacter.db");
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
     /**
      * Generates a random integer in the bounds of the inputted low and high values.
      * @param theLow The low end of the bound.
@@ -111,6 +125,7 @@ public class DungeonCharacter {
      */
     protected DungeonCharacter(final String theName, final int theHitPoints, final int theAtkSpeed,
                                final int theMinDmg, final int theMaxDmg, final int theHitChance) {
+        connectToDB();
         setName(theName);
         setHitPoints(theHitPoints);
         setAtkSpeed(theAtkSpeed);
