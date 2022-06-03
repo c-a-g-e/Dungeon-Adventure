@@ -14,9 +14,10 @@ public class Warrior extends Hero {
      * A child class of Hero with specific unique statistics.
      * @param theName is the name of the hero.
      */
-    protected Warrior(final String theName) {
-        super(theName, 125, 4, 35, 60, 80,
-                20, 40);
+    protected Warrior(final String theName, int theHitPoints, int theAtkSpeed, int theMinDmg, int theMaxDmg,
+                      int theHitChance, int theBlockChance, int theSpecialSkillChance) {
+        super(theName, theHitPoints, theAtkSpeed, theMinDmg, theMaxDmg, theHitChance,
+                theBlockChance, theSpecialSkillChance);
     }
 
     /**

@@ -1,9 +1,17 @@
+import org.sqlite.SQLiteDataSource;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Random;
 
 public class Room {
 
     /** Generates a random number. */
     protected static final Random RANDOM = new Random();
+
+    private static SQLiteDataSource ds = null;
 
     /**
      * Generates a random int in the bounds of the parameters.
@@ -235,16 +243,55 @@ public class Room {
      * @return the monster object that is selected.
      */
     private Monster monsterSelection() {
+        connectToDB();
         int randomMonster = generateRandomValue(1, 3);
         Monster monster;
         if (randomMonster == 1) {
-            monster = new Ogre();
+            //monster = new Ogre();
+            monster = createMonster("Ogre");
         } else if (randomMonster == 2) {
-            monster = new Gremlin();
+            //monster = new Gremlin();
+            monster = createMonster("Gremlin");
         } else {
-            monster = new Skeleton();
+            //monster = new Skeleton();
+            monster = createMonster("Skeleton");
         }
         return monster;
+    }
+
+    protected static void connectToDB() {
+        //establish connection
+        try {
+            ds = new SQLiteDataSource();
+            ds.setUrl("jdbc:sqlite:DungeonCharacter.db");
+        } catch ( Exception e ) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+    }
+
+    protected static Monster createMonster(String theMonster) {
+        int[] params = new int[8];
+        try (Connection conn = ds.getConnection();
+             Statement stmt = conn.createStatement();) {
+            ResultSet rs = stmt.executeQuery("SELECT HitPoints, AttackSpeed, MinDamage, MaxDamage, " +
+                    "HitChance, HealChance, MinHeal, MaxHeal " +
+                    "FROM Monsters " +
+                    "WHERE Class = " +
+                    "'" + theMonster + "'");
+            params[0] = rs.getInt("HitPoints");
+            params[1] = rs.getInt("AttackSpeed");
+            params[2] = rs.getInt("MinDamage");
+            params[3] = rs.getInt("MaxDamage");
+            params[4] = rs.getInt("HitChance");
+            params[5] = rs.getInt("HealChance");
+            params[6] = rs.getInt("MinHeal");
+            params[7] = rs.getInt("MaxHeal");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.exit(0);
+        }
+        return new Monster(theMonster, params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7]);
     }
 
     /** Marks a room as visited. */
@@ -341,6 +388,9 @@ public class Room {
     public String toString() {
         String room;
         String item = containsItem();
+        if (item.equals("M")) {
+            item = String.valueOf(countNumberOfItems());
+        }
         if (getMyX() == 0) {
             room = "| " + item + " :";
         } else if (getMyX() == Dungeon.MY_COLUMNS - 1) {

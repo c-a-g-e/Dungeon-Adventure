@@ -14,9 +14,10 @@ public class Sorceress extends Hero {
      * A constructor for the unique Sorceress Hero.
      * @param theName is the name of the Sorceress.
      */
-    protected Sorceress(final String theName) {
-        super(theName, 75, 5, 25, 45,
-                70, 30, 100);
+    protected Sorceress(final String theName, int theHitPoints, int theAtkSpeed, int theMinDmg, int theMaxDmg,
+                        int theHitChance, int theBlockChance, int theSpecialSkillChance) {
+        super(theName, theHitPoints, theAtkSpeed, theMinDmg, theMaxDmg,
+                theHitChance, theBlockChance, theSpecialSkillChance);
         setMaxHitPoints(75);
     }
 

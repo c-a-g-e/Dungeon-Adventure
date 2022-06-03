@@ -8,7 +8,7 @@
 /**
  * Contains the hero object with unique characteristics that the monster object will not have.
  */
-public class Hero extends DungeonCharacter{
+class Hero extends DungeonCharacter{
 
     /** The chance that the hero will block the next incoming attack from the monster. */
     private int myBlockChance;
@@ -259,7 +259,7 @@ public class Hero extends DungeonCharacter{
         if (response == 1) {
             super.attack(opponent);
         } else if (response == 2) {
-            specialAbility(opponent);
+            this.specialAbility(opponent);
         } else if (response == 3) {
             setRunAway(true);
             System.out.println(getName() + " has run away.");

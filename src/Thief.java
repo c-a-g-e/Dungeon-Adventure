@@ -14,9 +14,10 @@ public class Thief extends Hero{
      * A constructor method for the unique Thief Hero.
      * @param theName is the name of the Thief.
      */
-    protected Thief(final String theName) {
-        super(theName, 75, 6, 20, 40,
-                80, 40, 40);
+    protected Thief(final String theName, int theHitPoints, int theAtkSpeed, int theMinDmg, int theMaxDmg,
+                    int theHitChance, int theBlockChance, int theSpecialSkillChance) {
+        super(theName, theHitPoints, theAtkSpeed, theMinDmg, theMaxDmg,
+                theHitChance, theBlockChance, theSpecialSkillChance);
     }
 
     /**

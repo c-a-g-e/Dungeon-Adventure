@@ -149,12 +149,12 @@ public class DungeonAdventure {
         Hero hero;
         connectToDB();
         if (response == 1) {
-            hero = new Warrior(name);
-            //hero = createHero(name, "Warrior");
+//            hero = new Warrior(name);
+            hero = createHero(name, "Warrior");
         } else if (response == 2) {
-            hero = new Sorceress(name);
+            hero = createHero(name, "Sorceress");
         } else {
-            hero = new Thief(name);
+            hero = createHero(name, "Thief");
         }
         return hero;
     }
@@ -171,7 +171,6 @@ public class DungeonAdventure {
         }
     }
 
-    //TODO FIX THIS!!!!!!!!!!!!!!!!!!!!!!!!!
     protected static Hero createHero(String theName, String theHero) {
         int[] params = new int[7];
         try (Connection conn = ds.getConnection();
@@ -180,7 +179,7 @@ public class DungeonAdventure {
                     "HitChance, BlockChance, SpecialSkillChance " +
                     "FROM Heroes " +
                     "WHERE Class = " +
-                    theHero);
+                    "'" + theHero + "'");
             params = new int[7];
             params[0] = rs.getInt("HitPoints");
             params[1] = rs.getInt("AttackSpeed");
@@ -193,7 +192,13 @@ public class DungeonAdventure {
             e.printStackTrace();
             System.exit(0);
         }
-        return new Hero(theName, params[0], params[1], params[2], params[3], params[4], params[5], params[6]);
+        if (theHero.equals("Warrior")) {
+            return new Warrior(theName, params[0], params[1], params[2], params[3], params[4], params[5], params[6]);
+        } else if (theHero.equals("Sorceress")) {
+            return new Sorceress(theName, params[0], params[1], params[2], params[3], params[4], params[5], params[6]);
+        } else {
+            return new Thief(theName, params[0], params[1], params[2], params[3], params[4], params[5], params[6]);
+        }
     }
 
 

@@ -32,22 +32,34 @@ public class Database {
                 "HitChance INT NOT NULL," +
                 "BlockChance INT NOT NULL," +
                 "SpecialSkillChance INT NOT NULL )";
+
+        String query2 = "CREATE TABLE IF NOT EXISTS Monsters ( " +
+                "Class TEXT NOT NULL, " +
+                "HitPoints INT NOT NULL," +
+                "AttackSpeed INT NOT NULL," +
+                "MinDamage INT NOT NULL," +
+                "MaxDamage INT NOT NULL," +
+                "HitChance INT NOT NULL," +
+                "HealChance INT NOT NULL," +
+                "MinHeal INT NOT NULL," +
+                "MaxHeal INT NOT NULL)";
         try  ( Connection conn = ds.getConnection();
               Statement stmt = conn.createStatement(); ) {
             int rv = stmt.executeUpdate( query );
-            //stmt.executeUpdate("ALTER TABLE DungeonCharacter DROP PlayerName");
+            int rv2 = stmt.executeUpdate( query2 );
             System.out.println( "executeUpdate() returned " + rv );
+            System.out.println( "executeUpdate() returned " + rv2);
         } catch ( SQLException e ) {
             e.printStackTrace();
             System.exit( 0 );
         }
         System.out.println( "Created questions table successfully" );
 
-//        //next insert two rows of data
+        //next insert two rows of data
 //        System.out.println( "Attempting to insert two rows into questions table" );
 //
-//        String query1 = "INSERT INTO questions ( QUESTION, ANSWER ) VALUES ( 'Last name of Java creator?', 'Gosling' )";
-//        String query2 = "INSERT INTO questions ( QUESTION, ANSWER ) VALUES ( 'This statement is false', 'paradox' )";
+//        String query1 = "INSERT INTO Heroes (Class) VALUES ('Warrior', 'Sorceress', 'Thief')";
+//        //String query2 = "INSERT INTO questions ( QUESTION, ANSWER ) VALUES ( 'This statement is false', 'paradox' )";
 //
 //        try ( Connection conn = ds.getConnection();
 //              Statement stmt = conn.createStatement(); ) {
