@@ -123,6 +123,7 @@ public class Dungeon {
      * exit, a pit, or another crown piece.
      * @param theDungeon is the dungeon that the crown pieces will be contained in.
      */
+    //TODO change crown pieces to pillars of OO
     private static void generateCrownPieces(final Room[][] theDungeon) {
         int randRow = generateRandomValue(0, MY_ROWS - 1);
         int randCol = generateRandomValue(0, MY_COLUMNS - 1);
