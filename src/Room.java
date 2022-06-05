@@ -35,7 +35,8 @@ public class Room {
     private boolean myVisionPotion;
     /** True if a crown piece is in the room. */
     private boolean myUsedVisionPotion;
-    private boolean myCrownPiece;
+    private boolean myPillar;
+    private String myPillarName;
     /** True if there is a pit in the room. */
     private boolean myPit;
     /** True if the room is the entrance. */
@@ -48,6 +49,7 @@ public class Room {
     private boolean myCharacter;
     /** Holds an int for the number of items in the room. */
     private int myNumberOfItems;
+    public static double myDifficultyWeight;
 
     /**
      * Gets the x value of the room.
@@ -162,18 +164,25 @@ public class Room {
      * Sets the room to true if the room contains a Crown Piece.
      * @param theBool true if the room is to contain a Crown Piece and false if it isn't.
      */
-    protected void setMyCrownPiece(final boolean theBool) {
-        myCrownPiece = theBool;
+    protected void setMyPillar(final boolean theBool) {
+        myPillar = theBool;
     }
 
     /**
      * Determines if the room has a crown piece.
      * @return true if the room contains a crown piece, false if not.
      */
-    public boolean getMyCrownPiece() {
-        return myCrownPiece;
-    }
+    public boolean getMyPillar() { return myPillar; }
 
+    /**
+     * Assigns a string to the myPillarName field
+     * @param theName the name of the pillar
+     */
+    public void setMyPillarName(String theName) { myPillarName = theName; }
+
+    public String getMyPillarName() {
+        return myPillarName;
+    }
     /**
      * Sets myCharacter to true if the hero is present in the room.
      * @param theBool is the boolean that will determine if the hero is in the room or not.
@@ -247,13 +256,10 @@ public class Room {
         int randomMonster = generateRandomValue(1, 3);
         Monster monster;
         if (randomMonster == 1) {
-            //monster = new Ogre();
             monster = createMonster("Ogre");
         } else if (randomMonster == 2) {
-            //monster = new Gremlin();
             monster = createMonster("Gremlin");
         } else {
-            //monster = new Skeleton();
             monster = createMonster("Skeleton");
         }
         return monster;
@@ -291,7 +297,14 @@ public class Room {
             e.printStackTrace();
             System.exit(0);
         }
-        return new Monster(theMonster, params[0], params[1], params[2], params[3], params[4], params[5], params[6], params[7]);
+        return new Monster(theMonster, params[0] * myDifficultyWeight,
+                params[1] * myDifficultyWeight,
+                params[2] * myDifficultyWeight,
+                params[3] * myDifficultyWeight,
+                params[4] * myDifficultyWeight,
+                params[5] * myDifficultyWeight,
+                params[6] * myDifficultyWeight,
+                params[7] * myDifficultyWeight);
     }
 
     /** Marks a room as visited. */
@@ -313,7 +326,7 @@ public class Room {
         myHealingPotion = false;
         myVisionPotion = false;
         myPit = false;
-        myCrownPiece = false;
+        myPillar = false;
     }
 
     /**
@@ -328,7 +341,7 @@ public class Room {
         if (myVisionPotion) {
             count++;
         }
-        if (myCrownPiece) {
+        if (myPillar) {
             count++;
         }
         if (myMonster != null) {
@@ -353,19 +366,25 @@ public class Room {
             if (myVisited || myUsedVisionPotion) {
                 if (countNumberOfItems() == 1) {
                     if (myEntrance) {
-                        item = "I";
+                        item = "i";
                     } else if (myExit) {
                         item =  "O";
                     } else if (myPit) {
-                        item =  "P";
+                        item =  "S";
                     } else if (myHealingPotion) {
                         item =  "H";
                     } else if (myVisionPotion) {
                         item =  "V";
                     } else if (myMonster != null) {
                         item =  "X";
-                    } else if (myCrownPiece) {
-                        item =  "C";
+                    } else if (myPillar) {
+                        item = switch (myPillarName) {
+                            case "Abstraction" -> "A";
+                            case "Encapsulation" -> "E";
+                            case "Inheritance" -> "I";
+                            case "Polymorphism" -> "P";
+                            default -> item;
+                        };
                     }
                 } else if (countNumberOfItems() == 0) {
                     item =  " ";
@@ -407,7 +426,7 @@ public class Room {
      */
     public void printVisionPotion() {
         switch (containsItem()) {
-            case "I":
+            case "i":
                 if (myVisited) {
                     System.out.print("The entrance of the maze lies in this room. There is no turning back, coward. ");
                 } else {
@@ -422,8 +441,8 @@ public class Room {
                             "\nprevents you from leaving without all three of the crown pieces.");
                 }
                 break;
-            case "P":
-                System.out.print("This room contains a punji filled pit. You don't want to fall in there...");
+            case "S":
+                System.out.print("This room contains a punji filled spike pit. You don't want to fall in there...");
                 break;
             case "H":
                 System.out.print("A healing potion lies alone in this quiet, oddly serene room.");
@@ -434,8 +453,11 @@ public class Room {
             case "X":
                 System.out.print("An unknown monster lurks in the dark corners of this room.");
                 break;
-            case "C":
-                System.out.print("One of the three crown pieces lays suspiciously in the center of the room.");
+            case "A":
+            case "E":
+            case "I":
+            case "P":
+                System.out.print("One of the four Pillars of OO lays suspiciously in the center of the room.");
                 break;
             case " ":
                 System.out.print("A seemingly empty room. Although, it's best to not drop your guard.");
@@ -446,8 +468,8 @@ public class Room {
                     System.out.print("\n\tA healing potion.");
                 } else if (myVisionPotion) {
                     System.out.print("\n\tA vision potion.");
-                } else if (myCrownPiece) {
-                    System.out.print("\n\tA crown piece.");
+                } else if (myPillar) {
+                    System.out.print("\n\tA Pillar of OO.");
                 } else if (myMonster != null) {
                     System.out.print("\n\tA deadly monster.");
                 }

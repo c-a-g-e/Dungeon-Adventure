@@ -11,6 +11,9 @@ public class Dungeon {
     /** Generates a random integer. */
     public static final Random RANDOM = new Random();
 
+    public static String[] myPillars = {"Abstraction", "Encapsulation", "Inheritance", "Polymorphism"};
+    public static double myDifficultyWeight;
+
     /**
      * Generates a random value from a low to a high.
      * @param theLow is the lowest possible integer.
@@ -26,16 +29,18 @@ public class Dungeon {
      * @param theHero the hero that will navigate the dungeon.
      * @return the dungeon that is created.
      */
+    //TODO improve implementation of difficulty and test
     public static Room[][] generateDungeon(final Hero theHero) {
         Room[][] maze = new Room[MY_ROWS][MY_COLUMNS];
         for (int row = 0; row < MY_ROWS; row++) {
             for (int column = 0; column < MY_COLUMNS; column++) {
                 maze[row][column] = new Room(column, row);
+                Room.myDifficultyWeight = myDifficultyWeight;
             }
         }
         findValidEntrancePoint(maze, theHero);
         createExit(maze);
-        generateCrownPieces(maze);
+        generatePillars(maze);
         return maze;
     }
 
@@ -124,18 +129,19 @@ public class Dungeon {
      * @param theDungeon is the dungeon that the crown pieces will be contained in.
      */
     //TODO change crown pieces to pillars of OO
-    private static void generateCrownPieces(final Room[][] theDungeon) {
+    private static void generatePillars(final Room[][] theDungeon) {
         int randRow = generateRandomValue(0, MY_ROWS - 1);
         int randCol = generateRandomValue(0, MY_COLUMNS - 1);
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 4; i++) {
             while (theDungeon[randRow][randRow].getMyEntrance() ||
                     theDungeon[randRow][randRow].getMyExit() ||
                     theDungeon[randRow][randCol].getMyPit() ||
-                    theDungeon[randRow][randCol].getMyCrownPiece()) {
+                    theDungeon[randRow][randCol].getMyPillar()) {
                 randRow = generateRandomValue(0, MY_ROWS - 1);
                 randCol = generateRandomValue(0, MY_COLUMNS - 1);
             }
-            theDungeon[randRow][randCol].setMyCrownPiece(true);
+            theDungeon[randRow][randCol].setMyPillar(true);
+            theDungeon[randRow][randCol].setMyPillarName(myPillars[i]);
         }
     }
 
@@ -235,9 +241,9 @@ public class Dungeon {
             System.out.println("You find a vision potion. You have: " + theHero.getMyVisionPotions());
             theRoom.setMyVisionPotions(false);
         }
-        if (theRoom.getMyCrownPiece()) {
+        if (theRoom.getMyPillar()) {
             theHero.setMyCrownPieces(theHero.getMyCrownPieces() + 1);
-            theRoom.setMyCrownPiece(false);
+            theRoom.setMyPillar(false);
             if (theHero.getMyCrownPieces() == 3) {
                 System.out.println("""
 

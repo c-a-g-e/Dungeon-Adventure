@@ -149,7 +149,6 @@ public class DungeonAdventure {
         Hero hero;
         connectToDB();
         if (response == 1) {
-//            hero = new Warrior(name);
             hero = createHero(name, "Warrior");
         } else if (response == 2) {
             hero = createHero(name, "Sorceress");
@@ -157,6 +156,25 @@ public class DungeonAdventure {
             hero = createHero(name, "Thief");
         }
         return hero;
+    }
+
+    private static void selectDifficulty(final Scanner theInput) {
+        String difficultyPrompt = """
+                                
+                What difficulty would you like to play on?
+                                
+                Enter (1) to play on Easy
+                Enter (2) to play on Normal (Recommended)
+                Enter (3) to play on Hard
+                """;
+        int response = DungeonCharacter.getIntInRange(theInput, difficultyPrompt, 1, 3);
+        if (response == 1) {
+            Dungeon.myDifficultyWeight = 0.8;
+        } else if (response == 2) {
+            Dungeon.myDifficultyWeight = 1;
+        } else {
+            Dungeon.myDifficultyWeight = 1.2;
+        }
     }
 
 
