@@ -30,7 +30,7 @@ public class Thief extends Hero{
         String s;
         playSound(thiefSpecial);
         System.out.println(getName() + " is attempting their special move.");
-        int checkSpecial = generateRandomValue(0, 100);
+        double checkSpecial = generateRandomValue(0, 100);
         if (checkSpecial <= 40) {
             setTurns(getTurns() + 1);
             System.out.println(getName() + " gained another attack for this turn!");
@@ -73,7 +73,7 @@ public class Thief extends Hero{
                     while (getTurns() > 0) {
                         double hitChanceCheck = generateRandomValue(0, 100);
                         if (hitChanceCheck <= getHitChance()) {
-                            int atkDmg = generateRandomValue(getMinDmg(), getMaxDmg());
+                            double atkDmg = generateRandomValue(getMinDmg(), getMaxDmg());
                             opponent.subtractHitPoints(atkDmg);
                         } else {
                             System.out.println("\nHit missed!\n");

@@ -53,7 +53,7 @@ class Hero extends DungeonCharacter{
      * Sets the hitpoints of the hero.
      * @param theHitPoints The desired hit points.
      */
-    protected void setHitPoints(final int theHitPoints) {
+    protected void setHitPoints(final double theHitPoints) {
         super.setHitPoints(theHitPoints);
     }
 
@@ -204,7 +204,7 @@ class Hero extends DungeonCharacter{
      * @return true if the hero can block, false if not.
      */
     protected boolean canBlock() {
-        int checkMyBlockChance = generateRandomValue(0, 100);
+        double checkMyBlockChance = generateRandomValue(0, 100);
         return checkMyBlockChance <= getBlockChance();
     }
 
@@ -213,7 +213,7 @@ class Hero extends DungeonCharacter{
      * @param theHitPoints is the amount of hitpoints being subtracted from this object.
      */
     @Override
-    protected void subtractHitPoints(final int theHitPoints) {
+    protected void subtractHitPoints(final double theHitPoints) {
         if (canBlock()) {
             playSound(shieldBlock);
             System.out.println(getName() + " blocked the attack!");

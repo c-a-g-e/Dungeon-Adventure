@@ -31,7 +31,7 @@ public class Warrior extends Hero {
         double checkCrushingBlow = generateRandomValue(0, 100);
         System.out.println(getName() + " is attempting Crushing Blow!");
         if (checkCrushingBlow <= mySpecialSkillChance) {
-            int damage = generateRandomValue(75, 125);
+            double damage = generateRandomValue(75, 125);
             playSound(warriorSpecial);
             opponent.subtractHitPoints(damage);
         } else {

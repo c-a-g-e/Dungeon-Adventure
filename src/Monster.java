@@ -11,16 +11,16 @@
 public class Monster extends DungeonCharacter {
 
     /** The chance that the Monster will heal after being attacked. (Only if the Monster is still alive). */
-    private int myHealChance;
+    private double myHealChance;
 
     /** The minumum amount of health that the Monster will heal. */
-    private int myMinHeal;
+    private double myMinHeal;
 
     /** The maximum amount of health that the Monster will heal. */
-    private int myMaxHeal;
+    private double myMaxHeal;
 
     /** The maximum hitpoints that the hero will ever have (to prevent over healing). */
-    private int myMaxHitPoints;
+    private double myMaxHitPoints;
 
     /**
      * The constructor method for the monster object that also initiates unique fields.
@@ -34,9 +34,9 @@ public class Monster extends DungeonCharacter {
      * @param theMinHeal is the minimum amount they can heal.
      * @param theMaxHeal is the maximum amount they can heal.
      */
-    protected Monster(final String theName, final int theHitPoints, final int theAtkSpeed, final int theMinDmg,
-                      final int theMaxDmg, final int theHitChance, final int theHealChance,
-                      final int theMinHeal, final int theMaxHeal) {
+    protected Monster(final String theName, final double theHitPoints, final double theAtkSpeed, final double theMinDmg,
+                      final double theMaxDmg, final double theHitChance, final double theHealChance,
+                      final double theMinHeal, final double theMaxHeal) {
         super(theName, theHitPoints, theAtkSpeed, theMinDmg, theMaxDmg, theHitChance);
         setHealChance(theHealChance);
         setMinHeal(theMinHeal);
@@ -48,7 +48,7 @@ public class Monster extends DungeonCharacter {
      * Sets the chance the Monster will heal after taking damage,.
      * @param theHealChance is the desired minimum heal amount.
      */
-    private void setHealChance(final int theHealChance) {
+    private void setHealChance(final double theHealChance) {
         myHealChance = theHealChance;
     }
 
@@ -56,7 +56,7 @@ public class Monster extends DungeonCharacter {
      * Sets the minimum heal amount.
      * @param theMinHeal is the desired minimum heal amount.
      */
-    private void setMinHeal(final int theMinHeal) {
+    private void setMinHeal(final double theMinHeal) {
         myMinHeal = theMinHeal;
     }
 
@@ -64,7 +64,7 @@ public class Monster extends DungeonCharacter {
      * Sets the maximum heal amount.
      * @param theMaxHeal is the desired maximum heal amount.
      */
-    private void setMaxHeal(final int theMaxHeal) {
+    private void setMaxHeal(final double theMaxHeal) {
         myMaxHeal = theMaxHeal;
     }
 
@@ -72,7 +72,7 @@ public class Monster extends DungeonCharacter {
      * Sets the maximum hitpoints of the Monster. (Equal to the starting amount of hitpoints).
      * @param theMaxHitPoints is the maximum hitpoints the Monster will have at any given time.
      */
-    private void setMaxHitPoints(final int theMaxHitPoints) {
+    private void setMaxHitPoints(final double theMaxHitPoints) {
         myMaxHitPoints = theMaxHitPoints;
     }
 
@@ -80,7 +80,7 @@ public class Monster extends DungeonCharacter {
      * Gets the heal chance.
      * @return the heal chance.
      */
-    public int getHealChance() {
+    public double getHealChance() {
         return myHealChance;
     }
 
@@ -88,7 +88,7 @@ public class Monster extends DungeonCharacter {
      * Gets the minimum heal.
      * @return the minimum heal.
      */
-    public int getMinHeal() {
+    public double getMinHeal() {
         return myMinHeal;
     }
 
@@ -96,7 +96,7 @@ public class Monster extends DungeonCharacter {
      * Gets the maximum heal.
      * @return the maximum heal.
      */
-    public int getMaxHeal() {
+    public double getMaxHeal() {
         return myMaxHeal;
     }
 
@@ -104,7 +104,7 @@ public class Monster extends DungeonCharacter {
      * Gets the maximum hitpoints the monster will have at any given time.
      * @return the maximum hitpoints.
      */
-    public int getMaxHitPoints() {
+    public double getMaxHitPoints() {
         return myMaxHitPoints;
     }
 
@@ -116,7 +116,7 @@ public class Monster extends DungeonCharacter {
      */
     private boolean canHeal() {
         if (alive() && getHitPoints() != getMaxHitPoints()) {
-            int checkHealChance = generateRandomValue(0, 100);
+            double checkHealChance = generateRandomValue(0, 100);
             return checkHealChance <= getHealChance();
         } else {
             return false;
@@ -128,7 +128,7 @@ public class Monster extends DungeonCharacter {
      * the minHeal and the maxHeal. This function cannot add hitpoints above the maximum hitpoints.
      */
     private void heal() {
-        int heal = generateRandomValue(getMinHeal(), getMaxHeal());
+        double heal = generateRandomValue(getMinHeal(), getMaxHeal());
         if ((heal + getHitPoints()) >= getMaxHitPoints()) {
             addHitPoints(getMaxHitPoints()-getHitPoints());
             System.out.println("The " + getName() + " has healed to full health!");
@@ -146,7 +146,7 @@ public class Monster extends DungeonCharacter {
      * @param theHitPoints is the amount of hitpoints being subtracted from this object.
      */
     @Override
-    protected void subtractHitPoints(final int theHitPoints) {
+    protected void subtractHitPoints(final double theHitPoints) {
         if (canHeal() && alive()) {
             super.subtractHitPoints(theHitPoints);
             heal();
@@ -190,7 +190,7 @@ public class Monster extends DungeonCharacter {
                 } else if (this instanceof Skeleton || this instanceof Gremlin) {
                     playSound(swordHit);
                 }
-                int atkDmg = generateRandomValue(getMinDmg(), getMaxDmg());
+                double atkDmg = generateRandomValue(getMinDmg(), getMaxDmg());
                 opponent.subtractHitPoints(atkDmg);
                 setTurns(getTurns() - 1);
             } else {

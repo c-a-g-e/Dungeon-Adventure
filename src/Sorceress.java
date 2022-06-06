@@ -45,7 +45,7 @@ public class Sorceress extends Hero {
      * This method cannot heal over the maximum hitpoints of the Sorceress.
      */
     private void heal() {
-        int heal = generateRandomValue(20, 40);
+        double heal = generateRandomValue(20, 40);
         if ((heal + getHitPoints()) >= getMaxHitPoints()) {
             addHitPoints(getMaxHitPoints()-getHitPoints());
             System.out.println(getName() + " has healed to full health!");

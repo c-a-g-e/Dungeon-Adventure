@@ -74,7 +74,7 @@ public class DungeonCharacter {
     private String myName;
 
     /** The Hit/Health points of the DungeonCharacter. */
-    private int myHitPoints;
+    private double myHitPoints;
 
     /** The attack speed of the DungeonCharacter. */
     private int myAtkSpeed;
@@ -109,7 +109,7 @@ public class DungeonCharacter {
      * @param theHigh The high end of the bound.
      * @return The random value that is generated.
      */
-    protected static int generateRandomValue(final int theLow, final int theHigh) {
+    protected static double generateRandomValue(final double theLow, final double theHigh) {
         return theLow + RANDOM_NUM.nextInt(theHigh - theLow + 1);
     }
 
@@ -123,8 +123,8 @@ public class DungeonCharacter {
      * @param theMaxDmg The maximum damage.
      * @param theHitChance The hit chance.
      */
-    protected DungeonCharacter(final String theName, final int theHitPoints, final int theAtkSpeed,
-                               final int theMinDmg, final int theMaxDmg, final int theHitChance) {
+    protected DungeonCharacter(final String theName, final double theHitPoints, final double theAtkSpeed,
+                               final double theMinDmg, final double theMaxDmg, final double theHitChance) {
         connectToDB();
         setName(theName);
         setHitPoints(theHitPoints);
@@ -146,7 +146,7 @@ public class DungeonCharacter {
      * Sets the Hit/Health points as an integer.
      * @param theHitPoints The desired hit points.
      */
-    protected void setHitPoints(final int theHitPoints) {
+    protected void setHitPoints(final double theHitPoints) {
         if (theHitPoints < 0) {
             throw new IllegalArgumentException("Hit points passed to setHitPoints was negative.");
         }
@@ -224,7 +224,7 @@ public class DungeonCharacter {
      * Returns the hit points of the object.
      * @return the hit points field.
      */
-    public int getHitPoints() {
+    public double getHitPoints() {
         return myHitPoints;
     }
 
@@ -277,7 +277,7 @@ public class DungeonCharacter {
         while (getTurns() > 0) {
             double hitChanceCheck = generateRandomValue(0, 100);
             if (hitChanceCheck <= getHitChance()) {
-                int atkDmg = generateRandomValue(myMinDmg, myMaxDmg);
+                double atkDmg = generateRandomValue(myMinDmg, myMaxDmg);
                 if (this instanceof Sorceress) {
                     playSound(magic);
                 } else if (this instanceof Warrior) {
@@ -308,7 +308,7 @@ public class DungeonCharacter {
      * This will set the hitpoints to 0 if this object's hitpoints are negative.
      * @param theHitPoints is the amount of hitpoints being subtracted from this object.
      */
-    protected void subtractHitPoints(final int theHitPoints) {
+    protected void subtractHitPoints(final double theHitPoints) {
         if (getHitPoints() - theHitPoints <= 0) {
             System.out.println("Killing Blow landed!\n*" + theHitPoints + "* damage");
             setHitPoints(0);
@@ -322,7 +322,7 @@ public class DungeonCharacter {
      * Adds hitpoints to an object.
      * @param theHitPoints the desired amount of hitpoints to be added.
      */
-    protected void addHitPoints(final int theHitPoints) {
+    protected void addHitPoints(final double theHitPoints) {
         myHitPoints += theHitPoints;
     }
 
