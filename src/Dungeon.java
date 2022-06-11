@@ -12,7 +12,16 @@ public class Dungeon {
     public static final Random RANDOM = new Random();
 
     public static String[] myPillars = {"Abstraction", "Encapsulation", "Inheritance", "Polymorphism"};
+
     public static double myDifficultyWeight;
+
+    public static double getMyDifficultyWeight() {
+        return myDifficultyWeight;
+    }
+
+    public static void setMyDifficultyWeight(double myDifficultyWeight) {
+        Dungeon.myDifficultyWeight = myDifficultyWeight;
+    }
 
     /**
      * Generates a random value from a low to a high.
@@ -242,16 +251,17 @@ public class Dungeon {
             theRoom.setMyVisionPotions(false);
         }
         if (theRoom.getMyPillar()) {
-            theHero.setMyCrownPieces(theHero.getMyCrownPieces() + 1);
+            theHero.setMyPillars(theHero.getMyPillars() + 1);
             theRoom.setMyPillar(false);
-            if (theHero.getMyCrownPieces() == 3) {
+            if (theHero.getMyPillars() == 4) {
                 System.out.println("""
 
-                        You have found all of the crown pieces. Make your way to the exit
+                        You have found all of the Pillars of OO. Make your way to the exit
                         to escape the dungeon.""");
             } else {
-                System.out.println("You found a crown piece! Only " +
-                        (3 - theHero.getMyCrownPieces()) +
+                System.out.println("You found a Pillar of OO: " +
+                        " Only " +
+                        (4 - theHero.getMyPillars()) +
                         " pieces to go!");
             }
         }
@@ -261,7 +271,7 @@ public class Dungeon {
             theHero.subtractHitPoints(pitDamage);
         }
         if (theRoom.getMyExit()) {
-            if (theHero.getMyCrownPieces() == 3) {
+            if (theHero.getMyPillars() == 4) {
                 Scanner input = new Scanner(System.in);
                 String response = "";
                 System.out.println("""
@@ -277,14 +287,15 @@ public class Dungeon {
                     }
                     if ("n".equalsIgnoreCase(response)) {
                         theHero.setMyEscaped(true);
+                        System.out.println("Congratulations! You have escaped the catacombs of Tartarus!");
                     }
                 }
             } else {
                 System.out.println("""
                          
                          You find what looks like an exit, but you notice the door is locked shut.
-                         The door has a large cutout that resembles a crown. Maybe that's what the
-                         crown pieces are for...
+                         The door has a large cutout that resemble four Pillars. Maybe that's what the
+                         pieces are for...
                         """);
             }
         }
@@ -306,6 +317,14 @@ public class Dungeon {
             }
         }
         System.out.print("\n---------------------\n");
+    }
+
+    public static void displayFullDungeon(final Room[][] theDungeon) {
+        for (int row = 0; row < MY_ROWS; row++) {
+            for (int column = 0; column < MY_COLUMNS; column++) {
+                theDungeon[row][column].markVisited();
+            }
+        }
     }
 
 }

@@ -239,11 +239,11 @@ public class Room {
         setMyY(theY);
         myPit = generateRandomValue(0,100) <= 10;
         if (!myPit && !myEntrance && !myExit) {
-            if (generateRandomValue(0, 100) <= 10) {
+            if (generateRandomValue(0, 100) <= Dungeon.getMyDifficultyWeight()) {
                 myMonster = monsterSelection();
             }
             myHealingPotion = generateRandomValue(0, 100) <= 10;
-            myVisionPotion = generateRandomValue(0, 100) <= 5;
+            myVisionPotion = generateRandomValue(0, 100) <= 10;
         }
     }
 
@@ -297,14 +297,14 @@ public class Room {
             e.printStackTrace();
             System.exit(0);
         }
-        return new Monster(theMonster, params[0] * myDifficultyWeight,
-                params[1] * myDifficultyWeight,
-                params[2] * myDifficultyWeight,
-                params[3] * myDifficultyWeight,
-                params[4] * myDifficultyWeight,
-                params[5] * myDifficultyWeight,
-                params[6] * myDifficultyWeight,
-                params[7] * myDifficultyWeight);
+        return new Monster(theMonster, params[0],
+                params[1],
+                params[2],
+                params[3],
+                params[4],
+                params[5],
+                params[6],
+                params[7]);
     }
 
     /** Marks a room as visited. */

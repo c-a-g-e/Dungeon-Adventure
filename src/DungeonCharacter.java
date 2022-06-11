@@ -86,10 +86,10 @@ public class DungeonCharacter {
     private int myMaxDmg;
 
     /** The chance that the DungeonCharacter's attack lands. */
-    private double myHitChance;
+    private int myHitChance;
 
     /** The amount of attacks that the DungeonCharacter gets per round. */
-    private int myTurns;
+    private double myTurns;
 
     protected void connectToDB() {
         SQLiteDataSource ds = null;
@@ -110,7 +110,7 @@ public class DungeonCharacter {
      * @return The random value that is generated.
      */
     protected static double generateRandomValue(final double theLow, final double theHigh) {
-        return theLow + RANDOM_NUM.nextInt(theHigh - theLow + 1);
+        return theLow + RANDOM_NUM.nextInt((int) (theHigh - theLow + 1));
     }
 
     /**
@@ -123,8 +123,8 @@ public class DungeonCharacter {
      * @param theMaxDmg The maximum damage.
      * @param theHitChance The hit chance.
      */
-    protected DungeonCharacter(final String theName, final double theHitPoints, final double theAtkSpeed,
-                               final double theMinDmg, final double theMaxDmg, final double theHitChance) {
+    protected DungeonCharacter(final String theName, final int theHitPoints, final int theAtkSpeed,
+                               final int theMinDmg, final int theMaxDmg, final int theHitChance) {
         connectToDB();
         setName(theName);
         setHitPoints(theHitPoints);
@@ -204,10 +204,10 @@ public class DungeonCharacter {
      * Sets the turns to a desired int.
      * @param theTurns is the desired turns.
      */
-    protected void setTurns(final int theTurns) {
-        if (theTurns < 0) {
-            throw new IllegalArgumentException("Turns passed in must be positive.");
-        }
+    protected void setTurns(final double theTurns) {
+//        if (theTurns < 0) {
+//            throw new IllegalArgumentException("Turns passed in must be positive.");
+//        }
         myTurns = theTurns;
     }
 
@@ -232,7 +232,7 @@ public class DungeonCharacter {
      * Returns the attack speed of the object.
      * @return the attack speed field.
      */
-    public int getAtkSpeed() {
+    public double getAtkSpeed() {
         return myAtkSpeed;
     }
 
@@ -240,7 +240,7 @@ public class DungeonCharacter {
      * Returns the minimum damage of the object.
      * @return the minimum damage.
      */
-    public int getMinDmg() {
+    public double getMinDmg() {
         return myMinDmg;
     }
 
@@ -248,7 +248,7 @@ public class DungeonCharacter {
      * Returns the maximum damage of the object.
      * @return the maximum damage.
      */
-    public int getMaxDmg() {
+    public double getMaxDmg() {
         return myMaxDmg;
     }
 
@@ -264,7 +264,7 @@ public class DungeonCharacter {
      * Returns the amount of times an object can attack in one round.
      * @return the turns.
      */
-    public int getTurns() {
+    public double getTurns() {
         return myTurns;
     }
 

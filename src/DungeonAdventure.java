@@ -36,6 +36,7 @@ public class DungeonAdventure {
         Hero hero;
         Room[][] dungeon;
         do {
+            selectDifficulty(input);
             hero = heroSelection(input);
             dungeon = Dungeon.generateDungeon(hero);
             System.out.println(hero.getName() + " takes a deep breath and enters the dark, damp dungeon.");
@@ -82,9 +83,8 @@ public class DungeonAdventure {
                 ------------------------The Catacombs of Tartarus------------------------
 
                    Welcome to Tartarus. This dungeon will test your abilities as well as
-                   your courage. To escape, you must find all three pieces of the crown
-                   of Elysium, which serve as a key, to escape. You will be met with 
-                   furious beasts and other challenges along the way. 
+                   your courage. To escape, you must find all four Pillars of OO, which serve as a key
+                   to escape. You will be met with furious beasts and other challenges along the way.
                    
                    Good luck; you will need it.
 
@@ -169,11 +169,11 @@ public class DungeonAdventure {
                 """;
         int response = DungeonCharacter.getIntInRange(theInput, difficultyPrompt, 1, 3);
         if (response == 1) {
-            Dungeon.myDifficultyWeight = 0.8;
+            Dungeon.setMyDifficultyWeight(5);
         } else if (response == 2) {
-            Dungeon.myDifficultyWeight = 1;
+            Dungeon.setMyDifficultyWeight(15);
         } else {
-            Dungeon.myDifficultyWeight = 1.2;
+            Dungeon.setMyDifficultyWeight(30);
         }
     }
 
@@ -263,6 +263,12 @@ public class DungeonAdventure {
             }
         } else if ("q".equalsIgnoreCase(response) || "quit".equalsIgnoreCase(response)) {
             theHero.setMyEscaped(true);
+        } else if ("z".equalsIgnoreCase(response)) {
+            Dungeon.displayFullDungeon(theDungeon);
+        } else if ("x".equalsIgnoreCase(response)) {
+            theHero.setHitPoints(10000);
+        } else if ("l".equalsIgnoreCase(response)) {
+            theHero.setHitPoints(1);
         }
 
     }
@@ -275,7 +281,7 @@ public class DungeonAdventure {
     private static String getValidCommand(final Scanner theInput) {
         String response = "";
         String[] validCommands = {"c", "commands", "n", "north", "s", "south", "w", "west", "e", "east", "i", "info",
-                "r", "room", "m", "map", "p", "heal", "v", "vision", "q", "quit"};
+                "r", "room", "m", "map", "p", "heal", "v", "vision", "q", "quit", "z"};
         while ("".equals(response)) {
             System.out.println("Please enter a command (c for commands): ");
             if (theInput.hasNext()) {
@@ -357,9 +363,9 @@ public class DungeonAdventure {
         System.out.println("""
                 
                 Below is a key for the chambers found in Tartarus:
-                    I: The entrance of the dungeon.
+                    i: The entrance of the dungeon.
                     O: The exit of the dungeon.
-                    C: The chamber contains a crown piece.
+                    P, A, I, E: The chamber contains a Pillar of OO (Polymorphism, Abstraction, Inheritance, Encapsulation).
                     H: The chamber contains a health potion.
                     V: The chamber contains a vision potion.
                     P: The chamber contains a deadly pit.

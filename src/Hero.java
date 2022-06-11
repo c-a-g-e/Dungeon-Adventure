@@ -15,13 +15,13 @@ class Hero extends DungeonCharacter{
     /** The chance that the hero's special skill will succeed. */
     protected int mySpecialSkillChance;
     /** The amount of turns that a hero gets per round. */
-    private int myTurns;
+    private double myTurns;
     /** The number of health potions that the hero has */
     private int myHealthPotions;
     /** The number of vision potions that the hero has. */
     private int myVisionPotions;
     /** The number of crown pieces that the hero has. */
-    private int myCrownPieces;
+    private int myPillars;
     /** The x (column) coordinate of the room that the character is in. */
     private int myRoomX;
     /** The y (row) coordinate of the room that the character is in. */
@@ -30,6 +30,8 @@ class Hero extends DungeonCharacter{
     private boolean myEscaped;
     /** The boolean that determines whether or not the player wants to run away from the battle and quit the game. */
     private boolean myRunAway;
+//    private String[] myCollectedPillars = new String[4];
+
 
     /**
      * The constructor method for the hero object that also initiates unique fields.
@@ -77,7 +79,7 @@ class Hero extends DungeonCharacter{
      * Sets the turns of the hero.
      * @param theTurns is the desired turns.
      */
-    protected void setTurns(final int theTurns) {
+    protected void setTurns(final double theTurns) {
         myTurns = theTurns;
     }
 
@@ -133,8 +135,8 @@ class Hero extends DungeonCharacter{
      * Sets the amount of crown pieces to the integer parameterized amount.
      * @param theAmount the amount that the crown pieces will be set to.
      */
-    public void setMyCrownPieces(final int theAmount) {
-        myCrownPieces = theAmount;
+    public void setMyPillars(final int theAmount) {
+        myPillars = theAmount;
     }
 
     /**
@@ -149,7 +151,7 @@ class Hero extends DungeonCharacter{
      * Gets the amount of turns that a hero has.
      * @return the amount of turns in int.
      */
-    public int getTurns() {
+    public double getTurns() {
         return myTurns;
     }
 
@@ -197,7 +199,7 @@ class Hero extends DungeonCharacter{
      * Retrieves the number of crown pieces that the hero is holding.
      * @return the number of crown pieces.
      */
-    public int getMyCrownPieces() { return myCrownPieces; }
+    public int getMyPillars() { return myPillars; }
 
     /**
      * Checks whether or not the hero can block depending on their block chance.
@@ -350,7 +352,7 @@ class Hero extends DungeonCharacter{
                 "\n\tInventory: " +
                 "\n\t\tHealth Potions: " + getMyHealthPotions() +
                 "\n\t\tVision Potions: " + getMyVisionPotions() +
-                "\n\t\tCrown Pieces: " + getMyCrownPieces());
+                "\n\t\tPillars of OO: " + getMyPillars());
     }
 
 }

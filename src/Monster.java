@@ -34,9 +34,9 @@ public class Monster extends DungeonCharacter {
      * @param theMinHeal is the minimum amount they can heal.
      * @param theMaxHeal is the maximum amount they can heal.
      */
-    protected Monster(final String theName, final double theHitPoints, final double theAtkSpeed, final double theMinDmg,
-                      final double theMaxDmg, final double theHitChance, final double theHealChance,
-                      final double theMinHeal, final double theMaxHeal) {
+    protected Monster(final String theName, final int theHitPoints, final int theAtkSpeed, final int theMinDmg,
+                      final int theMaxDmg, final int theHitChance, final int theHealChance,
+                      final int theMinHeal, final int theMaxHeal) {
         super(theName, theHitPoints, theAtkSpeed, theMinDmg, theMaxDmg, theHitChance);
         setHealChance(theHealChance);
         setMinHeal(theMinHeal);
